@@ -32,10 +32,10 @@ end
 # ADAL::Logging.log_level = ADAL::Logger::VERBOSE
 
 AUTHORITY_HOST = ADAL::Authority::WORLD_WIDE_AUTHORITY
-TENANT = 'your tenant here.onmicrosoft.com'
-CLIENT_ID = 'your client id here'
-WEB_API_RESOURCE = 'https://your tenant here.onmicrosoft.com/MyWebService'
-WEB_API_ENDPOINT = 'http://localhost:44321/api/graph'
+TENANT = 'your tenant here.onmicrosoft.com'.freeze
+CLIENT_ID = 'your client id here'.freeze
+WEB_API_RESOURCE = 'https://your tenant here.onmicrosoft.com/MyWebService'.freeze
+WEB_API_ENDPOINT = 'http://localhost:44321/api/graph'.freeze
 
 user_cred = ADAL::UserCredential.new(prompt('Username: '), prompt('Password: '))
 ctx = ADAL::AuthenticationContext.new(AUTHORITY_HOST, TENANT)

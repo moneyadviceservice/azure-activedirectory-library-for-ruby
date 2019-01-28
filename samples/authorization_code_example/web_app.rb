@@ -27,11 +27,11 @@ require 'securerandom'
 require 'sinatra'
 require 'uri'
 
-AUTHORITY = 'login.windows.net'
-CLIENT_ID = 'your_client_id_here'
-CLIENT_SECRET = 'your_client_secret_here'
-RESOURCE = 'https://graph.windows.net'
-TENANT = 'your_tenant_here.onmicrosoft.com'
+AUTHORITY = 'login.windows.net'.freeze
+CLIENT_ID = 'your_client_id_here'.freeze
+CLIENT_SECRET = 'your_client_secret_here'.freeze
+RESOURCE = 'https://graph.windows.net'.freeze
+TENANT = 'your_tenant_here.onmicrosoft.com'.freeze
 
 # AuthenticationContext is specific to a tenant. Our application only cares
 # about one tenant, so we only need one AuthenticationContext.
@@ -111,7 +111,8 @@ end
 # params[:code]. We pass this to ADAL to acquire an access_token.
 post '/auth' do
   token_response = auth_ctx.acquire_token_with_authorization_code(
-    params[:code], uri, client_cred, RESOURCE)
+    params[:code], uri, client_cred, RESOURCE
+  )
   case token_response
   when ADAL::SuccessResponse
     # ADAL successfully exchanged the authorization code for an access_token.
@@ -132,7 +133,8 @@ end
 
 get '/refresh' do
   token_response = auth_ctx.acquire_token_with_refresh_token(
-    session[:refresh_token], client_cred, RESOURCE)
+    session[:refresh_token], client_cred, RESOURCE
+  )
   session[:access_token] = token_response.access_token
   session[:refresh_token] = token_response.refresh_token
   redirect to('/secure')

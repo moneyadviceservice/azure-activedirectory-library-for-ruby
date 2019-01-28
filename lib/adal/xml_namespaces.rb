@@ -38,27 +38,29 @@ module ADAL
       'soap12' => 'http://schemas.xmlsoap.org/wsdl/soap12/',
       'sp' => 'http://schemas.xmlsoap.org/ws/2005/07/securitypolicy',
       'ssp' => 'http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702'
-    }
+    }.freeze
 
     NAMESPACES_2005 =
       NAMESPACES.merge(
-        'trust' => 'http://schemas.xmlsoap.org/ws/2005/02/trust')
+        'trust' => 'http://schemas.xmlsoap.org/ws/2005/02/trust'
+      )
 
     NAMESPACES_13 =
       NAMESPACES.merge(
-        'trust' => 'http://docs.oasis-open.org/ws-sx/ws-trust/200512')
+        'trust' => 'http://docs.oasis-open.org/ws-sx/ws-trust/200512'
+      )
 
-    WSTRUST_2005 = 'http://schemas.xmlsoap.org/ws/2005/02/trust/RSTR/Issue'
-    WSTRUST_13 = 'http://docs.oasis-open.org/ws-sx/ws-trust/200512/RSTRC/IssueFinal'
+    WSTRUST_2005 = 'http://schemas.xmlsoap.org/ws/2005/02/trust/RSTR/Issue'.freeze
+    WSTRUST_13 = 'http://docs.oasis-open.org/ws-sx/ws-trust/200512/RSTRC/IssueFinal'.freeze
 
     ACTION_TO_NAMESPACE = { WSTRUST_13 => NAMESPACES_13,
-                            WSTRUST_2005 => NAMESPACES_2005 }
+                            WSTRUST_2005 => NAMESPACES_2005 }.freeze
 
     BINDING_TO_ACTION = {
       'UserNameWSTrustBinding_IWSTrustFeb2005Async' => WSTRUST_2005,
       'UserNameWSTrustBinding_IWSTrustFeb2005Async1' => WSTRUST_2005,
       'UserNameWSTrustBinding_IWSTrust13Async' => WSTRUST_13,
       'UserNameWSTrustBinding_IWSTrust13Async1' => WSTRUST_13
-    }
+    }.freeze
   end
 end

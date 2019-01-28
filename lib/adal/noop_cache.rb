@@ -26,10 +26,10 @@ module ADAL
     # Swallows any number of parameters and returns nil.
     def noop(*); end
 
-    alias_method :add, :noop
-    alias_method :add_many, :noop
-    alias_method :remove, :noop
-    alias_method :remove_many, :noop
+    alias add noop
+    alias add_many noop
+    alias remove noop
+    alias remove_many noop
 
     def find(*)
       []

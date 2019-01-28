@@ -38,9 +38,9 @@ module ADAL
 
     # Federation response type from the userrealm endpoint.
     module AccountType
-      FEDERATED = 'Federated'
-      MANAGED = 'Managed'
-      UNKNOWN = 'Unknown'
+      FEDERATED = 'Federated'.freeze
+      MANAGED = 'Managed'.freeze
+      UNKNOWN = 'Unknown'.freeze
     end
 
     # ADAL only supports flows for managed and federated users.
@@ -61,7 +61,8 @@ module ADAL
     # @optional String authority_host
     #   The host name of the authority to verify the user against.
     def initialize(
-      username, password, authority_host = Authority::WORLD_WIDE_AUTHORITY)
+      username, password, authority_host = Authority::WORLD_WIDE_AUTHORITY
+    )
       @username = username
       @password = password
       @authority_host = authority_host
@@ -87,7 +88,7 @@ module ADAL
       when AccountType::FEDERATED
         federated_request_params
       else
-        fail UnsupportedAccountTypeError, account_type
+        raise UnsupportedAccountTypeError, account_type
       end
     end
 
@@ -112,7 +113,8 @@ module ADAL
       URI::HTTPS.build(
         host: @authority_host,
         path: @discovery_path,
-        query: URI.encode_www_form('api-version' => '1.0'))
+        query: URI.encode_www_form('api-version' => '1.0')
+      )
     end
 
     # @return Hash

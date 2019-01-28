@@ -93,7 +93,8 @@ module ADAL
     #   The resource being requested.
     # @return TokenResponse
     def acquire_token_with_authorization_code(
-      auth_code, redirect_uri, client_cred, resource = nil)
+      auth_code, redirect_uri, client_cred, resource = nil
+    )
       fail_if_arguments_nil(auth_code, redirect_uri, client_cred)
       token_request_for(client_cred)
         .get_with_authorization_code(auth_code, redirect_uri, resource)
@@ -111,7 +112,8 @@ module ADAL
     #   The resource being requested.
     # @return TokenResponse
     def acquire_token_with_refresh_token(
-      refresh_token, client_cred, resource = nil)
+      refresh_token, client_cred, resource = nil
+    )
       fail_if_arguments_nil(refresh_token, client_cred)
       token_request_for(client_cred)
         .get_with_refresh_token(refresh_token, resource)
@@ -163,14 +165,17 @@ module ADAL
     #   Any remaining query parameters to add to the URI.
     # @return URI
     def authorization_request_url(
-      resource, client_id, redirect_uri, extra_query_params = {})
+      resource, client_id, redirect_uri, extra_query_params = {}
+    )
       @authority.authorize_endpoint(
         extra_query_params.reverse_merge(
           client_id: client_id,
           response_mode: FORM_POST,
           redirect_uri: redirect_uri,
           resource: resource,
-          response_type: CODE))
+          response_type: CODE
+        )
+      )
     end
 
     ##

@@ -52,7 +52,8 @@ describe ADAL::AuthenticationContext do
       it 'should produce the correct request url' do
         params = { foo: :bar }
         authorization_url = auth_ctx.authorization_request_url(
-          resource, client_id, redirect_uri, params)
+          resource, client_id, redirect_uri, params
+        )
         expect(authorization_url.to_s.strip)
           .to eq "https://#{AUTHORITY}/#{TENANT}/oauth2/authorize?client_id=" \
                  "#{client_id}&response_mode=form_post&redirect_uri=http%3A%2" \
@@ -79,20 +80,23 @@ describe ADAL::AuthenticationContext do
   describe '#acquire_token_with_authorization_code' do
     it 'should return a SuccessResponse when successful' do
       token_response = auth_ctx.acquire_token_with_authorization_code(
-        AUTH_CODE, REDIRECT_URI, client_cred, RESOURCE)
+        AUTH_CODE, REDIRECT_URI, client_cred, RESOURCE
+      )
       expect(token_response).to be_a(ADAL::SuccessResponse)
     end
 
     it 'should return an ErrorResponse when unauthorized' do
       token_response = auth_ctx.acquire_token_with_authorization_code(
-        AUTH_CODE, 'bad', client_cred, RESOURCE)
+        AUTH_CODE, 'bad', client_cred, RESOURCE
+      )
       expect(token_response).to be_a(ADAL::ErrorResponse)
     end
 
     it 'should fail if any of the required parameters are nil' do
       expect do
         auth_ctx.acquire_token_with_authorization_code(
-          nil, REDIRECT_URI, client_cred, RESOURCE)
+          nil, REDIRECT_URI, client_cred, RESOURCE
+        )
       end.to raise_error(ArgumentError)
     end
   end
@@ -118,26 +122,30 @@ describe ADAL::AuthenticationContext do
   describe '#acquire_token_with_refresh_token' do
     it 'should return a SuccessResponse when successful' do
       token_response = auth_ctx.acquire_token_with_refresh_token(
-        REFRESH_TOKEN, client_cred, RESOURCE)
+        REFRESH_TOKEN, client_cred, RESOURCE
+      )
       expect(token_response).to be_a(ADAL::SuccessResponse)
     end
 
     it 'should return an ErrorResponse when unauthorized' do
       token_response = auth_ctx.acquire_token_with_refresh_token(
-        REFRESH_TOKEN, 'bad', RESOURCE)
+        REFRESH_TOKEN, 'bad', RESOURCE
+      )
       expect(token_response).to be_a(ADAL::ErrorResponse)
     end
 
     it 'should return an ErrorResponse when the refresh token is invalid' do
       token_response = auth_ctx.acquire_token_with_refresh_token(
-        'bad', client_cred, RESOURCE)
+        'bad', client_cred, RESOURCE
+      )
       expect(token_response).to be_a(ADAL::ErrorResponse)
     end
 
     it 'should fail if any of the required parameters are nil' do
       expect do
         auth_ctx.acquire_token_with_refresh_token(
-          nil, client_cred, RESOURCE)
+          nil, client_cred, RESOURCE
+        )
       end.to raise_error(ArgumentError)
     end
   end
@@ -163,7 +171,8 @@ describe ADAL::AuthenticationContext do
         subject { auth_ctx.acquire_token_for_user(RESOURCE, client_cred, user) }
         before(:each) do
           @first_response = auth_ctx.acquire_token_with_authorization_code(
-            AUTH_CODE, REDIRECT_URI, client_cred, RESOURCE)
+            AUTH_CODE, REDIRECT_URI, client_cred, RESOURCE
+          )
         end
 
         it { is_expected.to_not be nil }

@@ -29,7 +29,8 @@ describe ADAL::MexRequest do
 
       it 'should raise an error' do
         expect { ADAL::MexRequest.new(uri) }.to raise_error(
-          URI::InvalidURIError)
+          URI::InvalidURIError
+        )
       end
     end
   end

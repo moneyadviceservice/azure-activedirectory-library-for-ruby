@@ -22,7 +22,7 @@
 
 require_relative '../spec_helper'
 
-WSTRUST_FIXTURES = File.expand_path('../../fixtures/wstrust', __FILE__)
+WSTRUST_FIXTURES = File.expand_path('../fixtures/wstrust', __dir__)
 
 describe ADAL::WSTrustResponse do
   describe '::parse' do
@@ -43,7 +43,8 @@ describe ADAL::WSTrustResponse do
       it 'has the correct grant type' do
         wstrust_response = ADAL::WSTrustResponse.parse(response)
         expect(wstrust_response.grant_type).to eq(
-          ADAL::TokenRequest::GrantType::SAML1)
+          ADAL::TokenRequest::GrantType::SAML1
+        )
       end
     end
 
@@ -90,7 +91,8 @@ describe ADAL::WSTrustResponse do
       it 'throws the appropriate error' do
         expect { ADAL::WSTrustResponse.parse(response) }
           .to raise_error(
-            ADAL::WSTrustResponse::WSTrustError, /Unable to parse token/)
+            ADAL::WSTrustResponse::WSTrustError, /Unable to parse token/
+          )
       end
     end
 
@@ -101,7 +103,8 @@ describe ADAL::WSTrustResponse do
         expect { ADAL::WSTrustResponse.parse(response) }
           .to raise_error(
             ADAL::WSTrustResponse::WSTrustError,
-            /too many RequestedSecurityTokens/)
+            /too many RequestedSecurityTokens/
+          )
       end
     end
 
@@ -122,7 +125,8 @@ describe ADAL::WSTrustResponse do
     context 'with a SAML1 token type' do
       subject do
         response = ADAL::WSTrustResponse.new(
-          'irrelevant', ADAL::WSTrustResponse::TokenType::V1)
+          'irrelevant', ADAL::WSTrustResponse::TokenType::V1
+        )
         response.grant_type
       end
       it { is_expected.to eq(ADAL::TokenRequest::GrantType::SAML1) }
@@ -131,7 +135,8 @@ describe ADAL::WSTrustResponse do
     context 'with a SAML2 token type' do
       subject do
         response = ADAL::WSTrustResponse.new(
-          'irrelevant', ADAL::WSTrustResponse::TokenType::V2)
+          'irrelevant', ADAL::WSTrustResponse::TokenType::V2
+        )
         response.grant_type
       end
       it { is_expected.to eq(ADAL::TokenRequest::GrantType::SAML2) }
@@ -142,7 +147,8 @@ describe ADAL::WSTrustResponse do
     context 'with an unrecognized token type' do
       subject do
         response = ADAL::WSTrustResponse.new(
-          'irrelevant', ADAL::WSTrustResponse::TokenType::V1)
+          'irrelevant', ADAL::WSTrustResponse::TokenType::V1
+        )
         response.instance_variable_set(:@token_type, 'not a token type')
         response.grant_type
       end

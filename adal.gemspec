@@ -20,7 +20,7 @@
 # THE SOFTWARE.
 #-------------------------------------------------------------------------------
 
-require File.expand_path('../lib/adal/version', __FILE__)
+require File.expand_path('lib/adal/version', __dir__)
 
 Gem::Specification.new do |s|
   s.name = 'adal'

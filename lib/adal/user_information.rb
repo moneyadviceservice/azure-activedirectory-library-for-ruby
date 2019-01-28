@@ -23,9 +23,9 @@
 module ADAL
   # Basically just a holder for the id token.
   class UserInformation
-    ID_TOKEN_FIELDS = [:aud, :iss, :iat, :nbf, :exp, :ver, :tid, :oid, :upn,
-                       :sub, :given_name, :family_name, :name, :amr,
-                       :unique_name, :nonce, :email]
+    ID_TOKEN_FIELDS = %i[aud iss iat nbf exp ver tid oid upn
+                         sub given_name family_name name amr
+                         unique_name nonce email].freeze
     ID_TOKEN_FIELDS.each { |field| attr_reader field }
     attr_reader :unique_id
     attr_reader :displayable_id

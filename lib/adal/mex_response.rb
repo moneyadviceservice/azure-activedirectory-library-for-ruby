@@ -42,10 +42,10 @@ module ADAL
       'tingTokens/wsp:Policy/sp:UsernameToken/wsp:Policy/sp:WssUsernameToken1' \
       '0]/@u:Id|//wsdl:definitions/wsp:Policy[./wsp:ExactlyOne/wsp:All/ssp:Si' \
       'gnedEncryptedSupportingTokens/wsp:Policy/ssp:UsernameToken/wsp:Policy/' \
-      'ssp:WssUsernameToken10]/@u:Id'
-    BINDING_XPATH = '//wsdl:definitions/wsdl:binding[./wsp:PolicyReference]'
-    PORT_XPATH = '//wsdl:definitions/wsdl:service/wsdl:port'
-    ADDRESS_XPATH = './soap12:address/@location'
+      'ssp:WssUsernameToken10]/@u:Id'.freeze
+    BINDING_XPATH = '//wsdl:definitions/wsdl:binding[./wsp:PolicyReference]'.freeze
+    PORT_XPATH = '//wsdl:definitions/wsdl:service/wsdl:port'.freeze
+    ADDRESS_XPATH = './soap12:address/@location'.freeze
 
     ##
     # Parses the XML string response from the Metadata Exchange endpoint into
@@ -69,7 +69,8 @@ module ADAL
         reference_uri = node.xpath('./wsp:PolicyReference/@URI', NAMESPACES)
         node.xpath('./@name').to_s if policy_ids.include? reference_uri.to_s
       end.compact
-      fail MexError, 'No matching bindings found.' if matching_bindings.empty?
+      raise MexError, 'No matching bindings found.' if matching_bindings.empty?
+
       matching_bindings
     end
     private_class_method :parse_bindings
@@ -95,7 +96,7 @@ module ADAL
       endpoints = parse_all_endpoints(xml, bindings)
       case endpoints.size
       when 0
-        fail MexError, 'No valid WS-Trust endpoints found.'
+        raise MexError, 'No valid WS-Trust endpoints found.'
       when 1
       else
         logger.info('Multiple WS-Trust endpoints were found in the mex ' \
@@ -109,8 +110,9 @@ module ADAL
     # @return Array[String]
     def self.parse_policy_ids(xml)
       policy_ids = xml.xpath(POLICY_ID_XPATH, NAMESPACES)
-                   .map { |attr| "\##{attr.value}" }
-      fail MexError, 'No username token policy nodes.' if policy_ids.empty?
+                      .map { |attr| "\##{attr.value}" }
+      raise MexError, 'No username token policy nodes.' if policy_ids.empty?
+
       policy_ids
     end
     private_class_method :parse_policy_ids
@@ -135,7 +137,8 @@ module ADAL
       @action = BINDING_TO_ACTION[binding]
       @wstrust_url = URI.parse(wstrust_url.to_s)
       return if @wstrust_url.instance_of? URI::HTTPS
-      fail ArgumentError, 'Mex is only done over HTTPS.'
+
+      raise ArgumentError, 'Mex is only done over HTTPS.'
     end
   end
 end

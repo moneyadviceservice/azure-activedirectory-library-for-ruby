@@ -30,12 +30,12 @@ require 'openssl'
 ADAL::Logging.log_level = ADAL::Logger::VERBOSE
 
 AUTHORITY_HOST = ADAL::Authority::WORLD_WIDE_AUTHORITY
-CLIENT_ID = 'your client id here'
-RESOURCE = 'https://outlook.office365.com'
-TENANT = 'your tenant here.onmicrosoft.com'
+CLIENT_ID = 'your client id here'.freeze
+RESOURCE = 'https://outlook.office365.com'.freeze
+TENANT = 'your tenant here.onmicrosoft.com'.freeze
 
-PFX_PATH = './path/to/your/cert.pfx'
-PFX_PASSWORD = 'password'
+PFX_PATH = './path/to/your/cert.pfx'.freeze
+PFX_PASSWORD = 'password'.freeze
 
 pfx = OpenSSL::PKCS12.new(File.read(PFX_PATH), PFX_PASSWORD)
 

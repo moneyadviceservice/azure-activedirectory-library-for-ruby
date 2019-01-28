@@ -33,16 +33,16 @@ module ADAL
     extend Logging
     include Util
 
-    AUTHENTICATE_HEADER = 'www-authenticate'
-    AUTHORITY_KEY = 'authorization_uri'
-    RESOURCE_KEY = 'resource'
+    AUTHENTICATE_HEADER = 'www-authenticate'.freeze
+    AUTHORITY_KEY = 'authorization_uri'.freeze
+    RESOURCE_KEY = 'resource'.freeze
 
     BEARER_CHALLENGE_VALIDATION = /^\s*Bearer\s+([^,\s="]+?)="?([^"]*?)"?\s*
-      (,\s*([^,\s="]+?)="([^:]*?)"\s*)*$/x
+      (,\s*([^,\s="]+?)="([^:]*?)"\s*)*$/x.freeze
     private_constant :BEARER_CHALLENGE_VALIDATION
-    FIRST_KEY_VALUE = /^\s*Bearer\s+([^, \s="]+?)="([^"]*?)"\s*/
+    FIRST_KEY_VALUE = /^\s*Bearer\s+([^, \s="]+?)="([^"]*?)"\s*/.freeze
     private_constant :FIRST_KEY_VALUE
-    OTHER_KEY_VALUE = /(?:,\s*([^,\s="]+?)="([^"]*?)"\s*)/
+    OTHER_KEY_VALUE = /(?:,\s*([^,\s="]+?)="([^"]*?)"\s*)/.freeze
     private_constant :OTHER_KEY_VALUE
 
     attr_reader :authority_uri
@@ -61,7 +61,7 @@ module ADAL
                      "#{resource_url}.")
       response = Net::HTTP.post_form(URI.parse(resource_url.to_s), {})
       unless response.key? AUTHENTICATE_HEADER
-        fail ArgumentError, 'The specified resource uri does not support ' \
+        raise ArgumentError, 'The specified resource uri does not support ' \
           'OAuth challenges.'
       end
       create_from_authenticate_header(response[AUTHENTICATE_HEADER])
@@ -84,7 +84,8 @@ module ADAL
       logger.verbose("Authentication header #{challenge} was successfully " \
                      'parsed as an OAuth challenge into a parameters hash.')
       AuthenticationParameters.new(
-        params[AUTHORITY_KEY], params[RESOURCE_KEY])
+        params[AUTHORITY_KEY], params[RESOURCE_KEY]
+      )
     end
 
     ##

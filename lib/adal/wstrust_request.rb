@@ -36,14 +36,14 @@ module ADAL
     include Util
     include XmlNamespaces
 
-    DEFAULT_APPLIES_TO = 'urn:federation:MicrosoftOnline'
+    DEFAULT_APPLIES_TO = 'urn:federation:MicrosoftOnline'.freeze
 
     ACTION_TO_RST_TEMPLATE = {
       WSTRUST_13 =>
-        File.expand_path('../templates/rst.13.xml.erb', __FILE__),
+        File.expand_path('templates/rst.13.xml.erb', __dir__),
       WSTRUST_2005 =>
-        File.expand_path('../templates/rst.2005.xml.erb', __FILE__)
-    }
+        File.expand_path('templates/rst.2005.xml.erb', __dir__)
+    }.freeze
 
     ##
     # Constructs a new WSTrustRequest.
@@ -52,7 +52,8 @@ module ADAL
     # @param String action
     # @param String applies_to
     def initialize(
-      endpoint, action = WSTRUST_13, applies_to = DEFAULT_APPLIES_TO)
+      endpoint, action = WSTRUST_13, applies_to = DEFAULT_APPLIES_TO
+    )
       @applies_to = applies_to
       @endpoint = URI.parse(endpoint.to_s)
       @action = action
@@ -75,7 +76,7 @@ module ADAL
       if response.code == '200'
         WSTrustResponse.parse(response.body)
       else
-        fail WSTrustResponse::WSTrustError, "Failed request: code #{response.code}."
+        raise WSTrustResponse::WSTrustError, "Failed request: code #{response.code}."
       end
     end
 
@@ -93,7 +94,7 @@ module ADAL
     # @return String
     def rst(username, password, message_id = SecureRandom.uuid)
       created = Time.now
-      expires = created + 10 * 60   # 10 minute expiration
+      expires = created + 10 * 60 # 10 minute expiration
       @render.result(binding)
     end
   end

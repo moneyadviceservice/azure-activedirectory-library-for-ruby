@@ -28,7 +28,8 @@ describe ADAL::AuthenticationParameters do
   describe '::create_from_resource_url' do
     it 'should make an request to the resource server and parse the response' do
       expect(Net::HTTP).to receive(:post_form).once.and_return(
-        'www-authenticate' => 'Bearer authorization_uri="sample.com"')
+        'www-authenticate' => 'Bearer authorization_uri="sample.com"'
+      )
       params = ADAL::AuthenticationParameters.create_from_resource_url('a.io')
       expect(params.authority_uri).to eq(URI.parse('sample.com'))
     end
@@ -42,7 +43,8 @@ describe ADAL::AuthenticationParameters do
 
     it 'should fail if the response does not contain an authenticate header' do
       allow(Net::HTTP).to receive(:post_form).and_return(
-        body: 'abc', 'content-type' => 'application/json')
+        body: 'abc', 'content-type' => 'application/json'
+      )
       expect do
         ADAL::AuthenticationParameters.create_from_resource_url('myurl.com')
       end.to raise_error(ArgumentError)
@@ -59,7 +61,8 @@ describe ADAL::AuthenticationParameters do
   describe '::create_from_authenticate_header' do
     it 'should successfully parse a valid authentication header' do
       params = ADAL::AuthenticationParameters.create_from_authenticate_header(
-        'Bearer authorization_uri="foobar,lj,;l,", resource="a( res&*^ource"')
+        'Bearer authorization_uri="foobar,lj,;l,", resource="a( res&*^ource"'
+      )
       expect(params.authority_uri).to eq(URI.parse('foobar,lj,;l,'))
       expect(params.resource).to eq('a( res&*^ource')
     end
@@ -73,7 +76,8 @@ describe ADAL::AuthenticationParameters do
     it 'should return nil if the header does not contain an authority key' do
       expect(
         ADAL::AuthenticationParameters.create_from_authenticate_header(
-          'Bearer: resource="http://graph.windows.net"')
+          'Bearer: resource="http://graph.windows.net"'
+        )
       ).to be_nil
     end
   end

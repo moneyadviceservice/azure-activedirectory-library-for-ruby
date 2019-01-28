@@ -33,7 +33,8 @@ describe ADAL::CachedTokenResponse do
   let(:refresh_token) { REFRESH_TOKEN }
   let(:response) do
     ADAL::SuccessResponse.new(
-      resource: resource, refresh_token: refresh_token, expires_in: expires_in)
+      resource: resource, refresh_token: refresh_token, expires_in: expires_in
+    )
   end
 
   describe '#initialize' do
@@ -117,7 +118,7 @@ describe ADAL::CachedTokenResponse do
     let(:other) { ADAL::CachedTokenResponse.new(client, oauthority, response) }
     subject do
       ADAL::CachedTokenResponse.new(client, authority, response)
-        .can_refresh?(other)
+                               .can_refresh?(other)
     end
 
     context 'when not an mrrt' do

@@ -36,7 +36,7 @@ module ADAL
 
     FIELDS = { user_info: USER_INFO,
                username: USERNAME,
-               resource: RESOURCE }
+               resource: RESOURCE }.freeze
 
     ##
     # Constructs a CacheDriver to interact with a token cache.
@@ -52,7 +52,8 @@ module ADAL
     # @optional Fixnum expiration_buffer_sec
     #   The number of seconds to use as a leeway when dealing with cache expiry.
     def initialize(
-      authority, client, token_cache = NoopCache.new, expiration_buffer_sec = 0)
+      authority, client, token_cache = NoopCache.new, expiration_buffer_sec = 0
+    )
       @authority = authority
       @client = client
       @expiration_buffer_sec = expiration_buffer_sec
@@ -68,6 +69,7 @@ module ADAL
     #   fails silently.
     def add(token_response)
       return unless token_response.instance_of? SuccessResponse
+
       logger.verbose('Adding successful TokenResponse to cache.')
       entry = CachedTokenResponse.new(@client, @authority, token_response)
       update_refresh_tokens(entry) if entry.mrrt?
@@ -86,7 +88,9 @@ module ADAL
       matches = validate(
         find_all_cached_entries(
           query.reverse_merge(
-            authority: @authority, client_id: @client.client_id))
+            authority: @authority, client_id: @client.client_id
+          )
+        )
       )
       resource_specific(matches, resource) || refresh_mrrt(matches, resource)
     end
@@ -137,7 +141,7 @@ module ADAL
       logger.verbose("Looking through #{responses.size} matching cache " \
                      "entries for resource #{resource}.")
       responses.select { |response| response.resource == resource }
-        .map(&:token_response).first
+               .map(&:token_response).first
     end
 
     ##
@@ -148,7 +152,8 @@ module ADAL
     #   A new MRRT containing a refresh token to update other matching cache
     #   entries with.
     def update_refresh_tokens(mrrt)
-      fail ArgumentError, 'Token must contain an MRRT.' unless mrrt.mrrt?
+      raise ArgumentError, 'Token must contain an MRRT.' unless mrrt.mrrt?
+
       @token_cache.find.each do |entry|
         entry.refresh_token = mrrt.refresh_token if mrrt.can_refresh?(entry)
       end

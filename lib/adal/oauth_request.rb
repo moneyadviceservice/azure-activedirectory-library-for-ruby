@@ -33,9 +33,9 @@ module ADAL
     include RequestParameters
     include Util
 
-    DEFAULT_CONTENT_TYPE = 'application/x-www-form-urlencoded'
-    DEFAULT_ENCODING = 'utf8'
-    SSL_SCHEME = 'https'
+    DEFAULT_CONTENT_TYPE = 'application/x-www-form-urlencoded'.freeze
+    DEFAULT_ENCODING = 'utf8'.freeze
+    SSL_SCHEME = 'https'.freeze
 
     def initialize(endpoint, params)
       @endpoint_uri = URI.parse(endpoint.to_s)
@@ -64,6 +64,7 @@ module ADAL
     # @param Net::HTTPGenericRequest
     def add_headers(request)
       return if Logging.correlation_id.nil?
+
       request.add_field(CLIENT_REQUEST_ID.to_s, Logging.correlation_id)
       request.add_field(CLIENT_RETURN_CLIENT_REQUEST_ID.to_s, true)
     end

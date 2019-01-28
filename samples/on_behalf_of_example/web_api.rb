@@ -27,10 +27,10 @@ require 'sinatra'
 # ADAL::Logging.log_level = ADAL::Logger::VERBOSE
 
 AUTHORITY_HOST = ADAL::Authority::WORLD_WIDE_AUTHORITY
-TENANT = 'your tenant here.onmicrosoft.com'
-RESOURCE = 'https://graph.windows.net'
-CLIENT_ID = 'your client id here'
-CLIENT_SECRET = 'your client secret here'
+TENANT = 'your tenant here.onmicrosoft.com'.freeze
+RESOURCE = 'https://graph.windows.net'.freeze
+CLIENT_ID = 'your client id here'.freeze
+CLIENT_SECRET = 'your client secret here'.freeze
 
 set :client_cred, ADAL::ClientCredential.new(CLIENT_ID, CLIENT_SECRET)
 set :ctx, ADAL::AuthenticationContext.new(AUTHORITY_HOST, TENANT)
@@ -67,5 +67,6 @@ end
 #   An access token for the designated resource.
 def exchange_tokens(access_token)
   settings.ctx.acquire_token_for_user(
-    RESOURCE, settings.client_cred, ADAL::UserAssertion.new(access_token))
+    RESOURCE, settings.client_cred, ADAL::UserAssertion.new(access_token)
+  )
 end
