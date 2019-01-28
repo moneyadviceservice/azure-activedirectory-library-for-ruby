@@ -22,7 +22,7 @@
 
 require_relative '../spec_helper'
 
-OAUTH_FIXTURES = File.expand_path('../../fixtures/oauth', __FILE__)
+OAUTH_FIXTURES = File.expand_path('../fixtures/oauth', __dir__)
 
 describe ADAL::TokenResponse do
   let(:response) { File.read(File.expand_path(file_name, OAUTH_FIXTURES)) }

@@ -38,8 +38,9 @@ module ADAL
     #   The token response to be cached.
     def initialize(client, authority, token_response)
       unless token_response.instance_of? SuccessResponse
-        fail ArgumentError, 'Only SuccessResponses can be cached.'
+        raise ArgumentError, 'Only SuccessResponses can be cached.'
       end
+
       @authority = authority
       if client.respond_to? :client_id
         @client = client
@@ -101,6 +102,7 @@ module ADAL
     #   the token is expired an unable to be refreshed.
     def validate(expiration_buffer_sec = 0)
       return true if (Time.now + expiration_buffer_sec).to_i < expires_on
+
       unless refresh_token
         logger.verbose('Cached token is almost expired but no refresh token ' \
                        'is available.')
@@ -159,7 +161,7 @@ module ADAL
     ## all means of checking equality must be consistent.
 
     def ==(other)
-      [:authority, :client_id, :token_response].all? do |field|
+      %i[authority client_id token_response].all? do |field|
         (other.respond_to? field) && (send(field) == other.send(field))
       end
     end

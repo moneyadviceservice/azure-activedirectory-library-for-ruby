@@ -87,13 +87,15 @@ describe ADAL::ClientAssertionCertificate do
       cert.public_key = key.public_key
       @pfx = OpenSSL::PKCS12.create('', '', key, cert)
       @assertion_cert = ADAL::ClientAssertionCertificate.new(
-        ADAL::Authority.new(AUTHORITY, TENANT), CLIENT_ID, @pfx)
+        ADAL::Authority.new(AUTHORITY, TENANT), CLIENT_ID, @pfx
+      )
     end
 
     it 'should contain client id, client assertion and client assertion type' do
       params = @assertion_cert.request_params
       expect(params.keys).to contain_exactly(
-        :client_id, :client_assertion, :client_assertion_type)
+        :client_id, :client_assertion, :client_assertion_type
+      )
     end
 
     it 'should have client assertion type be JWT_BEARER' do

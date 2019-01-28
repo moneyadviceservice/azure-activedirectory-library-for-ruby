@@ -47,8 +47,9 @@ module ADAL
     #   The PKCS12 file containing the certificate and private key.
     def initialize(authority, client_id, pkcs12_file)
       unless pkcs12_file.is_a? OpenSSL::PKCS12
-        fail ArgumentError, 'Only PKCS12 file format is supported.'
+        raise ArgumentError, 'Only PKCS12 file format is supported.'
       end
+
       @authority = authority
       @certificate = pkcs12_file.certificate
       @client_id = client_id.to_s
@@ -78,11 +79,11 @@ module ADAL
     # on type safety.
     def validate_certificate_and_key(certificate, private_key)
       if !certificate.is_a? OpenSSL::X509::Certificate
-        fail ArgumentError, 'certificate must be an OpenSSL::X509::Certificate.'
+        raise ArgumentError, 'certificate must be an OpenSSL::X509::Certificate.'
       elsif !private_key.is_a? OpenSSL::PKey::RSA
-        fail ArgumentError, 'private_key must be an OpenSSL::PKey::RSA.'
+        raise ArgumentError, 'private_key must be an OpenSSL::PKey::RSA.'
       elsif public_key_size_bits(certificate) < MIN_KEY_SIZE_BITS
-        fail ArgumentError, 'certificate must contain a public key of at ' \
+        raise ArgumentError, 'certificate must contain a public key of at ' \
           "least #{MIN_KEY_SIZE_BITS} bits."
       end
     end

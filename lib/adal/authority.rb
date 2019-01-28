@@ -32,19 +32,19 @@ module ADAL
   class Authority
     include Logging
 
-    AUTHORIZE_PATH = '/oauth2/authorize'
-    COMMON_TENANT = 'common'
+    AUTHORIZE_PATH = '/oauth2/authorize'.freeze
+    COMMON_TENANT = 'common'.freeze
     DISCOVERY_TEMPLATE = URITemplate.new('https://{host}/common/discovery/' \
       'instance?authorization_endpoint={endpoint}&api-version=1.0')
-    TENANT_DISCOVERY_ENDPOINT_KEY = 'tenant_discovery_endpoint'
-    TOKEN_PATH = '/oauth2/token'
+    TENANT_DISCOVERY_ENDPOINT_KEY = 'tenant_discovery_endpoint'.freeze
+    TOKEN_PATH = '/oauth2/token'.freeze
     WELL_KNOWN_AUTHORITY_HOSTS = [
       'login.windows.net',
       'login.microsoftonline.com',
       'login.chinacloudapi.cn',
       'login.cloudgovapi.us'
-    ]
-    WORLD_WIDE_AUTHORITY = 'login.microsoftonline.com'
+    ].freeze
+    WORLD_WIDE_AUTHORITY = 'login.microsoftonline.com'.freeze
 
     attr_reader :host
     attr_reader :tenant
@@ -76,8 +76,9 @@ module ADAL
     # @optional Hash params
     #   Query parameters that will added to the endpoint.
     # @return [URI]
+    # rubocop:disable Rails/Blank
     def authorize_endpoint(params = nil)
-      params = params.select { |_, v| !v.nil? } if params.respond_to? :select
+      params = params.reject { |_, v| v.nil? } if params.respond_to? :select
       if params.nil? || params.empty?
         URI::HTTPS.build(host: @host, path: '/' + @tenant + AUTHORIZE_PATH)
       else
@@ -86,6 +87,7 @@ module ADAL
                          query: URI.encode_www_form(params))
       end
     end
+    # rubocop:enable Rails/Blank
 
     ##
     # URI that can be used to acquire tokens.

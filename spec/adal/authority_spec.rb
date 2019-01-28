@@ -30,7 +30,8 @@ describe ADAL::Authority do
     it 'should correctly construct token endpoints' do
       auth = ADAL::Authority.new(auth_host, tenant)
       expect(auth.token_endpoint.to_s).to eq(
-        "https://#{auth_host}/#{tenant}/oauth2/token")
+        "https://#{auth_host}/#{tenant}/oauth2/token"
+      )
     end
   end
 
@@ -39,7 +40,8 @@ describe ADAL::Authority do
       it 'should correctly construct the authorize endpoint' do
         auth = ADAL::Authority.new(auth_host, tenant)
         expect(auth.authorize_endpoint(foo: :bar).to_s).to eq(
-          "https://#{auth_host}/#{tenant}/oauth2/authorize?foo=bar")
+          "https://#{auth_host}/#{tenant}/oauth2/authorize?foo=bar"
+        )
       end
     end
 
@@ -47,7 +49,8 @@ describe ADAL::Authority do
       it 'should correctly construct the authorize endpoint' do
         auth = ADAL::Authority.new(auth_host, tenant)
         expect(auth.authorize_endpoint.to_s).to eq(
-          "https://#{auth_host}/#{tenant}/oauth2/authorize")
+          "https://#{auth_host}/#{tenant}/oauth2/authorize"
+        )
       end
     end
   end
@@ -63,7 +66,8 @@ describe ADAL::Authority do
 
     it 'should attempt static validation before dynamic validation' do
       auth = ADAL::Authority.new(
-        auth_host, tenant, true)
+        auth_host, tenant, true
+      )
       expect(auth).to receive(:validated_statically?).once.and_return true
       expect(auth).to_not receive(:validated_dynamically?)
       expect(auth.validate).to be_truthy
@@ -71,14 +75,16 @@ describe ADAL::Authority do
 
     it 'should successfully validate statically with a well known host' do
       auth = ADAL::Authority.new(
-        auth_host, tenant, true)
+        auth_host, tenant, true
+      )
       expect(auth).to_not receive(:validated_dynamically?)
       expect(auth.validate).to be_truthy
     end
 
     it 'should successully validate dynamically with the discovery endpoint' do
       auth = ADAL::Authority.new(
-        'someothersite.net', tenant, true)
+        'someothersite.net', tenant, true
+      )
       expect(Net::HTTP).to receive(:get).once.and_return('{"tenant_discovery_' \
         'endpoint": "https://login.windows.net/atenant.onmicrosoft.com/.well-' \
         'known/openid-configuration"}')
@@ -87,9 +93,11 @@ describe ADAL::Authority do
 
     it 'should not make a network connection after it validates once' do
       auth = ADAL::Authority.new(
-        'someothersite.net', tenant, true)
+        'someothersite.net', tenant, true
+      )
       expect(Net::HTTP).to receive(:get).once.and_return(
-        '{"tenant_discovery_endpoint": "endpoint"}')
+        '{"tenant_discovery_endpoint": "endpoint"}'
+      )
       expect(auth.validate).to be_truthy
       expect(auth.validate).to be_truthy
       expect(auth.validate).to be_truthy

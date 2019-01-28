@@ -43,13 +43,13 @@ module ADAL
     # All accepted grant types. This module can be mixed-in to other classes
     # that require them.
     module GrantType
-      AUTHORIZATION_CODE = 'authorization_code'
-      CLIENT_CREDENTIALS = 'client_credentials'
-      JWT_BEARER = 'urn:ietf:params:oauth:grant-type:jwt-bearer'
-      PASSWORD = 'password'
-      REFRESH_TOKEN = 'refresh_token'
-      SAML1 = 'urn:ietf:params:oauth:grant-type:saml1_1-bearer'
-      SAML2 = 'urn:ietf:params:oauth:grant-type:saml2-bearer'
+      AUTHORIZATION_CODE = 'authorization_code'.freeze
+      CLIENT_CREDENTIALS = 'client_credentials'.freeze
+      JWT_BEARER = 'urn:ietf:params:oauth:grant-type:jwt-bearer'.freeze
+      PASSWORD = 'password'.freeze
+      REFRESH_TOKEN = 'refresh_token'.freeze
+      SAML1 = 'urn:ietf:params:oauth:grant-type:saml1_1-bearer'.freeze
+      SAML2 = 'urn:ietf:params:oauth:grant-type:saml2-bearer'.freeze
     end
 
     ##
@@ -139,9 +139,9 @@ module ADAL
                      "#{user_cred} and resource #{resource}.")
       oauth = if user_cred.is_a? UserIdentifier
                 lambda do
-                  fail UserCredentialError,
-                       'UserIdentifier can only be used once there is a ' \
-                       'matching token in the cache.'
+                  raise UserCredentialError,
+                        'UserIdentifier can only be used once there is a ' \
+                        'matching token in the cache.'
                 end
               end || -> {}
       request(user_cred.request_params.merge(RESOURCE => resource), &oauth)
@@ -168,6 +168,7 @@ module ADAL
     def request(params, &block)
       cached_token = check_cache(request_params(params))
       return cached_token if cached_token
+
       cache_response(request_no_cache(request_params(params), &block))
     end
 
@@ -190,7 +191,7 @@ module ADAL
     # @param Hash
     # @return Hash
     def request_params(additional_params)
-      client_params.merge(additional_params).select { |_, v| !v.nil? }
+      client_params.merge(additional_params).reject { |_, v| v.nil? }
     end
 
     ##

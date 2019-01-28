@@ -34,7 +34,7 @@ module ADAL
   # of DateTime from stdlib which is ISO-8601. The ProgName will be the
   # correlation id if one is sent or absent otherwise.
   class Logger < Logger
-    SEVS = %w(VERBOSE INFO WARN ERROR FATAL)
+    SEVS = %w[VERBOSE INFO WARN ERROR FATAL].freeze
     VERBOSE = SEVS.index('VERBOSE')
 
     ##

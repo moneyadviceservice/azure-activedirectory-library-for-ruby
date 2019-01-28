@@ -26,9 +26,9 @@ require 'adal'
 ADAL::Logging.log_level = ADAL::Logger::VERBOSE
 
 AUTHORITY_HOST = ADAL::Authority::WORLD_WIDE_AUTHORITY
-CLIENT_ID = 'your clientid here'
-RESOURCE = 'https://graph.windows.net'
-TENANT = 'your tenant here.onmicrosoft.com'
+CLIENT_ID = 'your clientid here'.freeze
+RESOURCE = 'https://graph.windows.net'.freeze
+TENANT = 'your tenant here.onmicrosoft.com'.freeze
 
 def prompt(*args)
   print(*args)

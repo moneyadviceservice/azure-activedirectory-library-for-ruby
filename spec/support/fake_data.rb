@@ -24,17 +24,17 @@
 # separated into its own module so that it can be used as a mix-in in test
 # classes.
 module FakeData
-  AUTH_CODE = 'auth_code_1'
-  AUTHORITY = 'login.windows.net'
-  ASSERTION = 'header.payload.crypto'
-  CLIENT_ID = 'client_id_1'
-  CLIENT_SECRET = 'client_secret_1'
-  PASSWORD = 'password1'
-  REDIRECT_URI = 'http://redirect1.com'
-  REFRESH_TOKEN = 'refresh_token_1'
-  RETURNED_TOKEN = 'a new token'
-  RESOURCE = 'resource'
-  TENANT = 'TENANT1'
-  USERNAME = 'user1@TENANT1'
-  USER_ASSERTION = 'user_assertion_1'
+  AUTH_CODE = 'auth_code_1'.freeze
+  AUTHORITY = 'login.windows.net'.freeze
+  ASSERTION = 'header.payload.crypto'.freeze
+  CLIENT_ID = 'client_id_1'.freeze
+  CLIENT_SECRET = 'client_secret_1'.freeze
+  PASSWORD = 'password1'.freeze
+  REDIRECT_URI = 'http://redirect1.com'.freeze
+  REFRESH_TOKEN = 'refresh_token_1'.freeze
+  RETURNED_TOKEN = 'a new token'.freeze
+  RESOURCE = 'resource'.freeze
+  TENANT = 'TENANT1'.freeze
+  USERNAME = 'user1@TENANT1'.freeze
+  USER_ASSERTION = 'user_assertion_1'.freeze
 end

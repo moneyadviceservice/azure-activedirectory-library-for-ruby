@@ -22,7 +22,7 @@
 
 require_relative '../spec_helper'
 
-MEX_FIXTURES = File.expand_path('../../fixtures/mex', __FILE__)
+MEX_FIXTURES = File.expand_path('../fixtures/mex', __dir__)
 
 describe ADAL::MexResponse do
   describe '::parse' do
@@ -74,7 +74,8 @@ describe ADAL::MexResponse do
       it 'should throw an error' do
         expect { ADAL::MexResponse.parse(response) }
           .to raise_error(
-            ADAL::MexResponse::MexError, /No username token policy nodes/)
+            ADAL::MexResponse::MexError, /No username token policy nodes/
+          )
       end
     end
 
@@ -93,7 +94,8 @@ describe ADAL::MexResponse do
       it 'should throw an error' do
         expect { ADAL::MexResponse.parse(response) }
           .to raise_error(
-            ADAL::MexResponse::MexError, /No username token policy nodes/)
+            ADAL::MexResponse::MexError, /No username token policy nodes/
+          )
       end
     end
 
@@ -103,7 +105,8 @@ describe ADAL::MexResponse do
       it 'should throw an error' do
         expect { ADAL::MexResponse.parse(response) }
           .to raise_error(
-            ADAL::MexResponse::MexError, /No username token policy nodes/)
+            ADAL::MexResponse::MexError, /No username token policy nodes/
+          )
       end
     end
 
@@ -113,7 +116,8 @@ describe ADAL::MexResponse do
       it 'should throw an error' do
         expect { ADAL::MexResponse.parse(response) }
           .to raise_error(
-            ADAL::MexResponse::MexError, /No valid WS-Trust endpoints/)
+            ADAL::MexResponse::MexError, /No valid WS-Trust endpoints/
+          )
       end
     end
 

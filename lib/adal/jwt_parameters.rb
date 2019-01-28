@@ -23,17 +23,17 @@
 module ADAL
   # Literals used in JWT header and payload.
   module JwtParameters
-    ALGORITHM = 'alg'
-    AUDIENCE = 'aud'
-    EXPIRES_ON = 'exp'
-    ISSUER = 'iss'
-    JWT_ID = 'jti'
-    NOT_BEFORE = 'nbf'
-    RS256 = 'RS256'
+    ALGORITHM = 'alg'.freeze
+    AUDIENCE = 'aud'.freeze
+    EXPIRES_ON = 'exp'.freeze
+    ISSUER = 'iss'.freeze
+    JWT_ID = 'jti'.freeze
+    NOT_BEFORE = 'nbf'.freeze
+    RS256 = 'RS256'.freeze
     SELF_SIGNED_JWT_LIFETIME = 10
-    SUBJECT = 'sub'
-    THUMBPRINT = 'x5t'
-    TYPE = 'typ'
-    TYPE_JWT = 'JWT'
+    SUBJECT = 'sub'.freeze
+    THUMBPRINT = 'x5t'.freeze
+    TYPE = 'typ'.freeze
+    TYPE_JWT = 'JWT'.freeze
   end
 end

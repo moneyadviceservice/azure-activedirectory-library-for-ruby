@@ -31,7 +31,8 @@ describe ADAL::UserCredential do
   before(:each) do
     expect(Net::HTTP).to receive(:get).once.and_return(
       "{\"account_type\": \"#{account_type}\", " \
-      "\"federation_metadata_url\": \"#{fed_url}\"}")
+      "\"federation_metadata_url\": \"#{fed_url}\"}"
+    )
   end
 
   context 'with a federated user' do
@@ -96,7 +97,8 @@ describe ADAL::UserCredential do
     describe '#request_params' do
       it 'should contain username, password and grant type' do
         expect(user_cred.request_params.keys).to contain_exactly(
-          :username, :password, :grant_type, :scope)
+          :username, :password, :grant_type, :scope
+        )
       end
 
       describe 'grant_type' do
@@ -118,7 +120,8 @@ describe ADAL::UserCredential do
     describe '#request_params' do
       it 'should throw an error' do
         expect { user_cred.request_params }.to raise_error(
-          ADAL::UserCredential::UnsupportedAccountTypeError)
+          ADAL::UserCredential::UnsupportedAccountTypeError
+        )
       end
     end
   end

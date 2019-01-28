@@ -46,7 +46,8 @@ describe ADAL::SelfSignedJwtFactory do
     it 'should contain the correct keys in the payload' do
       payload, = JWT.decode(@jwt, @cert.public_key)
       expect(payload.keys).to contain_exactly(
-        'aud', 'iss', 'sub', 'nbf', 'exp', 'jti')
+        'aud', 'iss', 'sub', 'nbf', 'exp', 'jti'
+      )
     end
 
     it 'should containt the correct keys in the header' do

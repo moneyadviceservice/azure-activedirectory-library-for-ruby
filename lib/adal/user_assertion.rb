@@ -38,7 +38,8 @@ module ADAL
     #   The type of the assertion being made. Currently only JWT_BEARER is
     #   supported.
     def initialize(
-      assertion, assertion_type = ADAL::TokenRequest::GrantType::JWT_BEARER)
+      assertion, assertion_type = ADAL::TokenRequest::GrantType::JWT_BEARER
+    )
       @assertion = assertion
       @assertion_type = assertion_type
     end

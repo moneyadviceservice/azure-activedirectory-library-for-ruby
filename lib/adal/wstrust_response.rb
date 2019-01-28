@@ -39,25 +39,25 @@ module ADAL
 
     # All recognized SAML token types.
     module TokenType
-      V1 = 'urn:oasis:names:tc:SAML:1.0:assertion'
-      V2 = 'urn:oasis:names:tc:SAML:2.0:assertion'
+      V1 = 'urn:oasis:names:tc:SAML:1.0:assertion'.freeze
+      V2 = 'urn:oasis:names:tc:SAML:2.0:assertion'.freeze
 
-      ALL_TYPES = [V1, V2]
+      ALL_TYPES = [V1, V2].freeze
     end
 
     class WSTrustError < StandardError; end
     class UnrecognizedTokenTypeError < WSTrustError; end
 
-    ACTION_XPATH = '//s:Envelope/s:Header/a:Action/text()'
-    ERROR_XPATH = '//s:Envelope/s:Body/s:Fault/s:Code/s:Subcode/s:Value/text()'
-    FAULT_XPATH = '//s:Envelope/s:Body/s:Fault/s:Reason'
-    SECURITY_TOKEN_XPATH = './trust:RequestedSecurityToken'
+    ACTION_XPATH = '//s:Envelope/s:Header/a:Action/text()'.freeze
+    ERROR_XPATH = '//s:Envelope/s:Body/s:Fault/s:Code/s:Subcode/s:Value/text()'.freeze
+    FAULT_XPATH = '//s:Envelope/s:Body/s:Fault/s:Reason'.freeze
+    SECURITY_TOKEN_XPATH = './trust:RequestedSecurityToken'.freeze
     TOKEN_RESPONSE_XPATH =
       '//s:Envelope/s:Body/trust:RequestSecurityTokenResponse|//s:Envelope/s:' \
       'Body/trust:RequestSecurityTokenResponseCollection/trust:RequestSecurit' \
-      'yTokenResponse'
-    TOKEN_TYPE_XPATH = "./*[local-name() = 'TokenType']/text()"
-    TOKEN_XPATH = "./*[local-name() = 'Assertion']"
+      'yTokenResponse'.freeze
+    TOKEN_TYPE_XPATH = "./*[local-name() = 'TokenType']/text()".freeze
+    TOKEN_XPATH = "./*[local-name() = 'Assertion']".freeze
 
     ##
     # Parses a WS-Trust response from raw XML into an ADAL::WSTrustResponse
@@ -74,7 +74,7 @@ module ADAL
       if token && token_type
         WSTrustResponse.new(format_xml(token), format_xml(token_type))
       else
-        fail WSTrustError, 'Unable to parse token from response.'
+        raise WSTrustError, 'Unable to parse token from response.'
       end
     end
 
@@ -96,7 +96,7 @@ module ADAL
       fault = xml.xpath(FAULT_XPATH, NAMESPACES).first
       error = xml.xpath(ERROR_XPATH, NAMESPACES).first
       error = format_xml(error).split(':')[1] || error if error
-      fail WSTrustError, "Fault: #{fault}. Error: #{error}." if fault || error
+      raise WSTrustError, "Fault: #{fault}. Error: #{error}." if fault || error
     end
 
     # @param Nokogiri::XML::Document xml
@@ -118,9 +118,10 @@ module ADAL
         when 1
           token = requested_token.xpath(TOKEN_XPATH, namespace).first
           next if token.nil?
+
           return token, parse_token_type(node)
         else
-          fail WSTrustError, 'Found too many RequestedSecurityTokens.'
+          raise WSTrustError, 'Found too many RequestedSecurityTokens.'
         end
       end
     end
@@ -146,8 +147,9 @@ module ADAL
     #   The type of the token contained within the WS-Trust response.
     def initialize(token, token_type)
       unless TokenType::ALL_TYPES.include? token_type
-        fail UnrecognizedTokenTypeError, token_type
+        raise UnrecognizedTokenTypeError, token_type
       end
+
       @token = token
       @token_type = token_type
     end

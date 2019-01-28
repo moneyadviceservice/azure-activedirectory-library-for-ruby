@@ -57,7 +57,7 @@ module ADAL
     #
     # @return Boolean
     def error?
-      self.respond_to? :error
+      respond_to? :error
     end
   end
 
@@ -68,8 +68,8 @@ module ADAL
 
     # These fields may or may not be included in the response from the token
     # endpoint.
-    OAUTH_FIELDS = [:access_token, :expires_in, :expires_on, :id_token,
-                    :not_before, :refresh_token, :resource, :scope, :token_type]
+    OAUTH_FIELDS = %i[access_token expires_in expires_on id_token
+                      not_before refresh_token resource scope token_type].freeze
     OAUTH_FIELDS.each { |field| attr_reader field }
     attr_reader :user_info
     attr_reader :fields
@@ -127,8 +127,8 @@ module ADAL
   class ErrorResponse < TokenResponse
     include Logging
 
-    OAUTH_FIELDS = [:error, :error_description, :error_codes, :timestamp,
-                    :trace_id, :correlation_id, :submit_url, :context]
+    OAUTH_FIELDS = %i[error error_description error_codes timestamp
+                      trace_id correlation_id submit_url context].freeze
     OAUTH_FIELDS.each { |field| attr_reader field }
 
     # Constructs a Error from a collection of fields returned from a

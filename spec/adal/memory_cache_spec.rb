@@ -38,29 +38,32 @@ describe ADAL::MemoryCache do
 
     context 'with many tokens' do
       let(:expected_json) do
-        "[{\"access_token\":\"abc\",\"token_type\":\"JWT\"},{\"access_token\"" \
-        ":\"abc\",\"scope\":\"openid\"},{\"access_token\":\"abc\",\"resource" \
-        "\":\"http://graph.windows.net\"}]"
+        '[{"access_token":"abc","token_type":"JWT"},{"access_token"' \
+        ':"abc","scope":"openid"},{"access_token":"abc","resource' \
+        '":"http://graph.windows.net"}]'
       end
       let(:expected_json) do
-        "[{\"authority\":[\"login.windows.net\",\"contoso.org\"],\"client_id" \
-        "\":\"my client id\",\"token_response\":{\"access_token\":\"abc\",\"t" \
-        "oken_type\":\"JWT\"}},{\"authority\":[\"login.windows.net\",\"contos" \
-        "o.org\"],\"client_id\":\"my client id\",\"token_response\":{\"access" \
-        "_token\":\"abc\",\"scope\":\"openid\"}},{\"authority\":[\"login.wind" \
-        "ows.net\",\"contoso.org\"],\"client_id\":\"my client id\",\"token_re" \
-        "sponse\":{\"access_token\":\"abc\",\"resource\":\"http://graph.windo" \
-        "ws.net\"}}]"
+        '[{"authority":["login.windows.net","contoso.org"],"client_id' \
+        '":"my client id","token_response":{"access_token":"abc","t' \
+        'oken_type":"JWT"}},{"authority":["login.windows.net","contos' \
+        'o.org"],"client_id":"my client id","token_response":{"access' \
+        '_token":"abc","scope":"openid"}},{"authority":["login.wind' \
+        'ows.net","contoso.org"],"client_id":"my client id","token_re' \
+        'sponse":{"access_token":"abc","resource":"http://graph.windo' \
+        'ws.net"}}]'
       end
       before(:each) do
         cache_driver = ADAL::CacheDriver.new(authority, client, cache)
         cache_driver.add(
-          ADAL::SuccessResponse.new(access_token: 'abc', token_type: 'JWT'))
+          ADAL::SuccessResponse.new(access_token: 'abc', token_type: 'JWT')
+        )
         cache_driver.add(
-          ADAL::SuccessResponse.new(access_token: 'abc', scope: 'openid'))
+          ADAL::SuccessResponse.new(access_token: 'abc', scope: 'openid')
+        )
         cache_driver.add(
           ADAL::SuccessResponse.new(access_token: 'abc',
-                                    resource: 'http://graph.windows.net'))
+                                    resource: 'http://graph.windows.net')
+        )
       end
 
       it 'properly serializes the cache' do
@@ -84,12 +87,15 @@ describe ADAL::MemoryCache do
       before(:each) do
         cache_driver = ADAL::CacheDriver.new(authority, client, cache)
         cache_driver.add(
-          ADAL::SuccessResponse.new(access_token: 'abc', token_type: 'JWT'))
+          ADAL::SuccessResponse.new(access_token: 'abc', token_type: 'JWT')
+        )
         cache_driver.add(
-          ADAL::SuccessResponse.new(access_token: 'abc', scope: 'openid'))
+          ADAL::SuccessResponse.new(access_token: 'abc', scope: 'openid')
+        )
         cache_driver.add(
           ADAL::SuccessResponse.new(access_token: 'abc',
-                                    resource: 'http://graph.windows.net'))
+                                    resource: 'http://graph.windows.net')
+        )
       end
 
       it 'has the correct number of entries' do

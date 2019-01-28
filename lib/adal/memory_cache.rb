@@ -41,7 +41,7 @@ module ADAL
     # @return Array
     #   The entries after the addition.
     def add(entries)
-      entries = Array(entries)  # If entries is an array, this is a no-op.
+      entries = Array(entries) # If entries is an array, this is a no-op.
       old_size = @entries.size
       @entries |= entries
       logger.verbose("Added #{entries.size - old_size} new entries to cache.")

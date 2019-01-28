@@ -49,13 +49,15 @@ describe ADAL::TokenRequest do
       it 'should not make an OAuthRequest' do
         expect(ADAL::OAuthRequest).to_not receive(:new)
         token_request.get_with_authorization_code(
-          AUTH_CODE, REDIRECT_URI, RESOURCE)
+          AUTH_CODE, REDIRECT_URI, RESOURCE
+        )
       end
 
       it 'should retrieve the token response from the cache' do
         expect(
           token_request.get_with_authorization_code(
-            AUTH_CODE, REDIRECT_URI, RESOURCE)
+            AUTH_CODE, REDIRECT_URI, RESOURCE
+          )
         ).to eq(token_response)
       end
     end

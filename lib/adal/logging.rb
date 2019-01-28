@@ -53,8 +53,9 @@ module ADAL
     #
     def self.log_level=(level)
       unless Logger::SEVS.map.with_index { |_, i| i }.include? level
-        fail ArgumentError, "Invalid log level: #{level}."
+        raise ArgumentError, "Invalid log level: #{level}."
       end
+
       @log_level = level
     end
 

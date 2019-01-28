@@ -48,8 +48,9 @@ module ADAL
     # @return ADAL::UserIdentifier
     def initialize(id, type)
       unless [UNIQUE_ID, DISPLAYABLE_ID].include? type
-        fail ArgumentError, 'type must be an ADAL::UserIdentifier::Type.'
+        raise ArgumentError, 'type must be an ADAL::UserIdentifier::Type.'
       end
+
       @id = id
       @type = type
     end
@@ -71,7 +72,7 @@ module ADAL
     def ==(other)
       case other
       when UserIdentifier
-        self.equal? other
+        equal? other
       when UserInformation
         (type == UNIQUE_ID && id == other.unique_id) ||
           (type == DISPLAYABLE_ID && id == other.displayable_id)

@@ -32,16 +32,16 @@ class FakeTokenEndpoint < Sinatra::Base
 
   # Taken from RFC 6749 4.1.2.1.
   module ErrorResponseCodes
-    INVALID_REQUEST = 'invalid_request'
-    INVALID_CLIENT = 'invalid_client'
-    INVALID_GRANT = 'invalid_grant'
-    UNAUTHORIZED_CLIENT = 'unauthorized_client'
-    UNSUPPORTED_GRANT_TYPE = 'unsupported_grant_type'
+    INVALID_REQUEST = 'invalid_request'.freeze
+    INVALID_CLIENT = 'invalid_client'.freeze
+    INVALID_GRANT = 'invalid_grant'.freeze
+    UNAUTHORIZED_CLIENT = 'unauthorized_client'.freeze
+    UNSUPPORTED_GRANT_TYPE = 'unsupported_grant_type'.freeze
   end
 
   DEFAULT_EXPIRATION = 3600
   DEFAULT_ID_TOKEN = JWT.encode({ email: USERNAME }, '')
-  DEFAULT_TOKEN_TYPE = 'Bearer'
+  DEFAULT_TOKEN_TYPE = 'Bearer'.freeze
 
   post '/:tenant/oauth2/token' do
     if TENANT != params[:tenant] || CLIENT_ID != params[:client_id]
@@ -73,8 +73,7 @@ class FakeTokenEndpoint < Sinatra::Base
   def oauth_response(tenant)
     { access_token: 'test_access_token',
       token_type: 'BEARER',
-      tenant: tenant
-    }
+      tenant: tenant }
   end
 
   def successful_oauth_response(opts = {})
@@ -89,6 +88,7 @@ class FakeTokenEndpoint < Sinatra::Base
 
   def try_auth_code(data, params)
     return unless params.key? 'code'
+
     if (data['codes'].key? params[:code]) &&
        data['codes'][params['code']] == params[:redirect_uri]
       successful_oauth_response
@@ -99,6 +99,7 @@ class FakeTokenEndpoint < Sinatra::Base
 
   def try_client_secret(data, params)
     return unless params.key? 'client_secret'
+
     if data['client_secret'] == params[:client_secret]
       successful_oauth_response
     else
